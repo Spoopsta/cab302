@@ -1,13 +1,19 @@
 package asgn2Restaurant;
 
-
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
+
 import asgn2Customers.Customer;
 import asgn2Customers.CustomerFactory;
 import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.LogHandlerException;
 import asgn2Exceptions.PizzaException;
 import asgn2Pizzas.Pizza;
+import asgn2Pizzas.PizzaFactory;
 
 /**
  *
@@ -15,7 +21,7 @@ import asgn2Pizzas.Pizza;
  * and Customer object - either as an individual Pizza/Customer object or as an
  * ArrayList of Pizza/Customer objects.
  * 
- * @author Person A and Person B
+ * @author Nicholas Stolberg and Niall Stone
  *
  */
 public class LogHandler {
@@ -44,8 +50,48 @@ public class LogHandler {
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException{
 		// TO DO
+		// add in the pizza exception stuff.
+		BufferedReader in = null;
+		String textLine;
+		ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+		
+		LocalTime orderTime, deliveryTime;
+		int quantity;
+		String pizzaCode;
+		
+		try {
+			in = new BufferedReader(new FileReader(filename));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String line;
+		try {
+			while((line = in.readLine()) != null){
+			    textLine = line;
+			    String[] stringElements = textLine.split(", ");
+			    
+			    orderTime = LocalTime.parse(stringElements[0]);
+			    deliveryTime = LocalTime.parse(stringElements[1]);
+			    quantity = Integer.parseInt(stringElements[8]);
+			    pizzaCode = stringElements[7];
+			    pizzas.add(PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime));
+			}
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
+		}
+		
+		try {
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return pizzas;
 	}		
-
 	
 	/**
 	 * Creates a Customer object by parsing the  information contained in a single line of the log file. The format of 
@@ -77,7 +123,29 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
-		// TO DO		
+		// TO DO
+		//need to add pizzaException semantic erros.
+		LocalTime orderTime, deliveryTime;
+		int quantity;
+		String pizzaCode;
+		
+		String[] values;
+		try{
+			values = line.split(", ");
+		} catch(Exception ex){
+			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
+		}
+		
+		orderTime = LocalTime.parse(values[0]);
+		deliveryTime = LocalTime.parse(values[1]);
+		quantity = Integer.parseInt(values[8]);
+		pizzaCode = values[7];
+		
+		if(pizzaCode != "PZM" || pizzaCode != "PZV" || pizzaCode != "PZL"){
+			throw new PizzaException("invalid pizza code in long line.");
+		}
+		
+		return PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
 	}
 
 }
