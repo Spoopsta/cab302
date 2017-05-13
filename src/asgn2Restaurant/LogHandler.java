@@ -49,46 +49,25 @@ public class LogHandler {
 	 * 
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException{
-		// TO DO
-		// add in the pizza exception stuff.
 		BufferedReader in = null;
 		String textLine;
 		ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+		String line;
 		
-		LocalTime orderTime, deliveryTime;
-		int quantity;
-		String pizzaCode;
 		
 		try {
 			in = new BufferedReader(new FileReader(filename));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String line;
-		try {
-			while((line = in.readLine()) != null){
+			while((line = in.readLine()) != null) {
 			    textLine = line;
-			    String[] stringElements = textLine.split(", ");
 			    
-			    orderTime = LocalTime.parse(stringElements[0]);
-			    deliveryTime = LocalTime.parse(stringElements[1]);
-			    quantity = Integer.parseInt(stringElements[8]);
-			    pizzaCode = stringElements[7];
-			    pizzas.add(PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime));
+			    pizzas.add(createPizza(textLine));
 			}
+			
+			in.close();
 		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
-		}
-		
-		try {
-			in.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}	
 		
 		return pizzas;
 	}		
@@ -142,7 +121,7 @@ public class LogHandler {
 		pizzaCode = values[7];
 		
 		if(pizzaCode != "PZM" || pizzaCode != "PZV" || pizzaCode != "PZL"){
-			throw new PizzaException("invalid pizza code in long line.");
+			throw new PizzaException("invalid pizza code in line.");
 		}
 		
 		return PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
