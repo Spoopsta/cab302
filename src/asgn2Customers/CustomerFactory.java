@@ -36,7 +36,7 @@ public class CustomerFactory {
 		case "DNC":
 			return new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		default:
-			throw new CustomerException("Invalid Customer Code provided.");
+			throw new CustomerException("Invalid Customer Code provided - "+customerCode+ " is not a valid code.");
 		}
 	}
 }

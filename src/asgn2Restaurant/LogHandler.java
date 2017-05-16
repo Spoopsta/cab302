@@ -37,7 +37,21 @@ public class LogHandler {
 	 * 
 	 */
 	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{
-		// TO DO
+		BufferedReader re;
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		String line;
+		try {
+			re = new BufferedReader(new FileReader(filename));
+			while((line = re.readLine()) != null) {			    
+			    customers.add(createCustomer(line));
+			}
+			
+			re.close();
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
+		}
+		return customers;
 	}		
 
 	/**
@@ -53,7 +67,6 @@ public class LogHandler {
 		String textLine;
 		ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 		String line;
-		
 		
 		try {
 			in = new BufferedReader(new FileReader(filename));
