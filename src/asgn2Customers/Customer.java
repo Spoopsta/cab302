@@ -47,14 +47,21 @@ public abstract class Customer {
 		if(mobileNumber.length() != 10){
 			throw new CustomerException("Mobile numbers must be 10 digits long.");
 		}
+<<<<<<< HEAD
 		if(mobileNumber.charAt(0) != '0'){
+=======
+		if(mobileNumber.charAt(0) != 0){
+>>>>>>> origin/master
 			throw new CustomerException("Mobile numbers must start with 0.");
 		}
 		if(type=="Pick Up" && !((locationX == 0) && (locationY == 0))){
 			throw new CustomerException("Pick Up Customers must be located in the store (0,0).");
 		}
 		this.name = name;
+<<<<<<< HEAD
 		this.type = type;
+=======
+>>>>>>> origin/master
 		this.mobileNumber = mobileNumber;
 		this.locationX = locationX;
 		this.locationY = locationY;
