@@ -1,9 +1,5 @@
 package asgn2Restaurant;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -67,19 +63,13 @@ public class LogHandler {
 	 * 
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException{
-<<<<<<< HEAD
 		// add in the pizza exception stuff.
-=======
->>>>>>> origin/master
+
 		BufferedReader in = null;
 		String textLine;
 		ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 		String line;
 		
-<<<<<<< HEAD
-		
-=======
->>>>>>> origin/master
 		try {
 			in = new BufferedReader(new FileReader(filename));
 			while((line = in.readLine()) != null) {
@@ -115,10 +105,6 @@ public class LogHandler {
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}
 		return CustomerFactory.getCustomer(values[4], values[2], values[3], Integer.parseInt(values[5]), Integer.parseInt(values[6]));
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 	}
 	
 	/**
@@ -130,43 +116,30 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
-<<<<<<< HEAD
 		//need to add pizzaException semantic errors.
-=======
 		// TO DO
-		//need to add pizzaException semantic erros.
->>>>>>> origin/master
+
+
 		LocalTime orderTime, deliveryTime;
 		int quantity;
 		String pizzaCode;
-		
 		String[] values;
 		try{
-<<<<<<< HEAD
 			values = line.split(",");
 		} catch(Exception ex){
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}
 		System.out.println(values[0]);
-=======
-			values = line.split(", ");
-		} catch(Exception ex){
-			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
-		}
-		
->>>>>>> origin/master
+
 		orderTime = LocalTime.parse(values[0]);
 		deliveryTime = LocalTime.parse(values[1]);
 		quantity = Integer.parseInt(values[8]);
 		pizzaCode = values[7];
-		
-<<<<<<< HEAD
-=======
+
 		if(pizzaCode != "PZM" || pizzaCode != "PZV" || pizzaCode != "PZL"){
 			throw new PizzaException("invalid pizza code in line.");
 		}
 		
->>>>>>> origin/master
 		return PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
 	}
 
