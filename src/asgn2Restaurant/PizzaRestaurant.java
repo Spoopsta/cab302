@@ -2,7 +2,10 @@ package asgn2Restaurant;
 
 import java.util.ArrayList;
 
+import asgn2Restaurant.LogHandler;
 import asgn2Customers.Customer;
+import asgn2Exceptions.CustomerException;
+import asgn2Exceptions.LogHandlerException;
 import asgn2Exceptions.PizzaException;
 import asgn2Pizzas.Pizza;
 
@@ -54,7 +57,9 @@ public class PizzaRestaurant {
      *
 	 */
 	public boolean processLog(String filename) throws CustomerException, PizzaException, LogHandlerException{
-		// TO DO
+		this.customers = LogHandler.populateCustomerDataset(filename);
+		this.pizzas = LogHandler.populatePizzaDataset(filename);
+		return true;
 	}
 
 	/**
@@ -64,7 +69,10 @@ public class PizzaRestaurant {
 	 * @throws CustomerException if index is invalid.
 	 */
 	public Customer getCustomerByIndex(int index) throws CustomerException{
-		// TO DO
+		if(index > customers.size() - 1){
+			throw new CustomerException("Not a valid index.");
+		}
+		return customers.get(index);
 	}
 	
 	/**
@@ -99,7 +107,7 @@ public class PizzaRestaurant {
 	 * @return the number of objects contained in the customers field.
 	 */
 	public int getNumCustomerOrders(){
-		// TO DO
+		return customers.size();
 	}
 
 			
@@ -110,7 +118,11 @@ public class PizzaRestaurant {
 	 * @return the total delivery distance for all Customers objects in the customers field.
 	 */
 	public double getTotalDeliveryDistance(){
-		// TO DO
+		double dist = 0;
+		for(Customer customer: customers){
+			dist += customer.getDeliveryDistance();
+		}
+		return dist;
 	}
 
 	/**

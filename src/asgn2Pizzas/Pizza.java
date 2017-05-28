@@ -51,8 +51,7 @@ public abstract class Pizza  {
 			throw new PizzaException("Order cannot be made as the kitchen is closed.");
 		}
 		//is super long cause not sure about how type input is done. will fix later.
-		if(type != "margherita" || type != "Margherita" || type != "vegetarian" 
-				|| type != "Vegetarian" || type != "Meat Lovers" || type != "meat lovers"){
+		if(!(type.equals("Margherita") | type.equals("Vegetarian")| type.equals("Meat Lovers"))){
 			throw new PizzaException("We do not serve that type of pizza.");
 		}
 		
@@ -72,15 +71,15 @@ public abstract class Pizza  {
 	 */
 	public final void calculateCostPerPizza(){
 		// TO DO
-		if(pizzaType == "Margherita"){
+		if(pizzaType.equals("Margherita")){
 			costPerPizza = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost();
 		}
-		else if(pizzaType == "Vegetarian"){
+		else if(pizzaType.equals("Vegetarian")){
 			costPerPizza = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost()
 						+ PizzaTopping.EGGPLANT.getCost() + PizzaTopping.MUSHROOM.getCost()
 						+ PizzaTopping.CAPSICUM.getCost();
 		}
-		else if(pizzaType == "Meat Lovers"){
+		else if(pizzaType.equalsIgnoreCase("Meat Lovers")){
 			costPerPizza = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost()
 						+ PizzaTopping.BACON.getCost() + PizzaTopping.PEPPERONI.getCost()
 						+ PizzaTopping.SALAMI.getCost();
@@ -93,6 +92,7 @@ public abstract class Pizza  {
 	 */
 	public final double getCostPerPizza(){
 		// TO DO
+		calculateCostPerPizza();
 		return costPerPizza;
 	}
 
@@ -102,10 +102,10 @@ public abstract class Pizza  {
 	 */
 	public final double getPricePerPizza(){
 		// TO DO
-		if(pizzaType == "Margherita"){
+		if(pizzaType.equals("Margherita")){
 			return margheritaCost;
 		}
-		else if(pizzaType == "Vegetarian"){
+		else if(pizzaType.equals("Vegetarian")){
 			return vegetarianCost;
 		}
 		else{
@@ -150,7 +150,7 @@ public abstract class Pizza  {
 	 */
 	public final boolean containsTopping(PizzaTopping topping){
 		// TO DO
-		if(pizzaType == "Margherita"){
+		if(pizzaType.equals("Margherita")){
 			if(PizzaTopping.TOMATO.equals(topping) || PizzaTopping.CHEESE.equals(topping)){
 				return true;
 			}
@@ -158,7 +158,7 @@ public abstract class Pizza  {
 				return false;
 			}
 		}
-		else if(pizzaType == "Vegetarian"){
+		else if(pizzaType.equals("Vegetarian")){
 			if(PizzaTopping.TOMATO.equals(topping) || PizzaTopping.CHEESE.equals(topping)
 					|| PizzaTopping.EGGPLANT.equals(topping) || PizzaTopping.MUSHROOM.equals(topping) 
 					|| PizzaTopping.CAPSICUM.equals(topping)){

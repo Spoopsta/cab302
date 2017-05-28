@@ -12,7 +12,11 @@ import asgn2Exceptions.CustomerException;
 */
 public abstract class Customer {
 
-
+	protected String name;
+	protected String mobileNumber;
+	protected int locationX;
+	protected int locationY;
+	protected String type;
 	/**
 	 *  This class represents a customer of the Pizza Palace restaurant.  A detailed description of the class's fields
 	 *  and parameters is provided in the Assignment Specification, in particular in Section 5.2. 
@@ -31,7 +35,30 @@ public abstract class Customer {
 	 * 
 	 */
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
-		// TO DO
+		if(!(type.equals("Pick Up") | type.equals("Driver Delivery") | type.equals("Drone Delivery"))){
+			throw new CustomerException("Invalid Type of Customer.");
+		}
+		if(name.length() > 20){
+			throw new CustomerException("Customer's name is too long");
+		}
+		if(name.equals(new String(new char[name.length()]).replace("\0", " "))){
+			throw new CustomerException("Customer's name cannot be blank spaces.");
+		}
+		if(mobileNumber.length() != 10){
+			throw new CustomerException("Mobile numbers must be 10 digits long.");
+		}
+		if(mobileNumber.charAt(0) != '0'){
+			throw new CustomerException("Mobile numbers must start with 0.");
+		}
+		if(type=="Pick Up" && !((locationX == 0) && (locationY == 0))){
+			throw new CustomerException("Pick Up Customers must be located in the store (0,0).");
+		}
+		this.name = name;
+		this.type = type;
+		this.mobileNumber = mobileNumber;
+		this.locationX = locationX;
+		this.locationY = locationY;
+		
 	}
 	
 	/**
@@ -39,7 +66,7 @@ public abstract class Customer {
 	 * @return The Customer's name.
 	 */
 	public final String getName(){
-		// TO DO
+		return this.name;
 	}
 	
 	/**
@@ -47,7 +74,7 @@ public abstract class Customer {
 	 * @return The Customer's mobile number.
 	 */
 	public final String getMobileNumber(){
-		// TO DO
+		return this.mobileNumber;
 	}
 
 	/**
@@ -56,7 +83,7 @@ public abstract class Customer {
 	 * @return A human understandable description of the Customer's type.
 	 */
 	public final String getCustomerType(){
-		// TO DO
+		return this.type;
 	}
 	
 	/**
@@ -65,7 +92,7 @@ public abstract class Customer {
 	 * @return The Customer's X location
 	 */
 	public final int getLocationX(){
-		// TO DO
+		return this.locationX;
 	}
 
 	/**
@@ -74,7 +101,7 @@ public abstract class Customer {
 	 * @return The Customer's Y location
 	 */
 	public final int getLocationY(){
-		// TO DO
+		return this.locationY;
 	}
 
 	/**
