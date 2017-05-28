@@ -28,9 +28,10 @@ public class CustomerTests {
 	
 	@Before
 	public void makeCustomers() throws CustomerException{
-		pickup = new PickUpCustomer("John Doe", "12345678", 1, 2);
-		driver = new DriverDeliveryCustomer("Jane Doe", "87654321", -3, 4);
-		drone = new DroneDeliveryCustomer("Jimmy James", "00000000", -3, -5);
+		System.out.println("0123456789");
+		pickup = new PickUpCustomer("John Doe", "0123456789", 0, 0);
+		driver = new DriverDeliveryCustomer("Jane Doe", "0987654321", -3, 4);
+		drone = new DroneDeliveryCustomer("Jimmy James", "0000000000", -3, -5);
 	}
 	
 	//Testing the asgn2Customers.Customer abstract class with asgn2Customers.DriverDeliveryCustomer==
@@ -41,7 +42,7 @@ public class CustomerTests {
 	
 	@Test
 	public void testGetMobileNumber(){
-		assertEquals(driver.getMobileNumber(), "87654321");
+		assertEquals(driver.getMobileNumber(), "0987654321");
 	} 
 	
 	@Test
@@ -68,44 +69,44 @@ public class CustomerTests {
 	//Testing asgn2Customers.PickUpCustomer============================================================
 	@Test
 	public void testGetCustomerTypePickUp(){
-		assertEquals(driver.getCustomerType(), "Pick Up");
+		assertEquals(pickup.getCustomerType(), "Pick Up");
 	}
 	
 	@Test
 	public void testGetCustomerNamePickUp(){
-		assertEquals(driver.getName(), "Jimmy James");
+		assertEquals(pickup.getName(), "John Doe");
 	}
 	
 	@Test
 	public void testGetCustomerMobilePickUp(){
-		assertEquals(driver.getName(), "00000000");
+		assertEquals(pickup.getMobileNumber(), "0123456789");
 	}
 	
 	@Test
 	public void testGetDeliveryDistancePickUp(){
-		assert(driver.getDeliveryDistance() == 3);
+		assert(pickup.getDeliveryDistance() == 0);
 	}
 	//=================================================================================================
 	
 	//Testing asgn2Customers.DroneDeliveryCustomer=====================================================
 	@Test
 	public void testGetCustomerTypeDrone(){
-		assertEquals(driver.getCustomerType(), "Drone Delivery");
+		assertEquals(drone.getCustomerType(), "Drone Delivery");
 	}
 	
 	@Test
 	public void testGetCustomerNameDrone(){
-		assertEquals(driver.getName(), "John Doe");
+		assertEquals(drone.getName(), "Jimmy James");
 	}
 	
 	@Test
 	public void testGetCustomerMobileDrone(){
-		assertEquals(driver.getName(), "12345678");
+		assertEquals(drone.getMobileNumber(), "0000000000");
 	}
 	
 	@Test
 	public void testGetDeliveryDistanceDrone(){
-		assert(driver.getDeliveryDistance() == 8);
+		assert(drone.getDeliveryDistance() == Math.sqrt((Math.pow(0 - drone.getLocationX(), 2) + (Math.pow((0-drone.getLocationY()), 2)))));
 	}
 	//=================================================================================================
 
