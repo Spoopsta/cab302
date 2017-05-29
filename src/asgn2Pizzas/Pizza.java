@@ -11,7 +11,7 @@ import asgn2Exceptions.PizzaException;
  * Each of these subclasses have a different set of toppings. A description of the class's fields
  * and their constraints is provided in Section 5.1 of the Assignment Specification. 
  * 
- * @author Person A
+ * @author Nicholas Stolberg
  *
  */
 public abstract class Pizza  {
@@ -50,7 +50,15 @@ public abstract class Pizza  {
 		if(orderTime.getHour() > 23 || orderTime.getHour() < 19){
 			throw new PizzaException("Order cannot be made as the kitchen is closed.");
 		}
-		//is super long cause not sure about how type input is done. will fix later.
+		if(deliveryTime.isBefore(orderTime)){
+			throw new PizzaException("Delivery cannot occur before order.");
+		}
+		if(deliveryTime.isBefore(orderTime.plusMinutes(10))){
+			throw new PizzaException("Pizza has not finished cooking yet.");
+		}
+		if(deliveryTime.isAfter(orderTime.plusHours(1).plusMinutes(10))){
+			throw new PizzaException("Delivery took too long. Pizza disposed of.");
+		}
 		if(!(type.equals("Margherita") | type.equals("Vegetarian")| type.equals("Meat Lovers"))){
 			throw new PizzaException("We do not serve that type of pizza.");
 		}
