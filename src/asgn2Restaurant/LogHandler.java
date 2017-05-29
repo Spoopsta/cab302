@@ -136,10 +136,6 @@ public class LogHandler {
 		quantity = Integer.parseInt(values[8]);
 		pizzaCode = values[7];
 
-		if(pizzaCode != "PZM" || pizzaCode != "PZV" || pizzaCode != "PZL"){
-			throw new PizzaException("invalid pizza code in line.");
-		}
-		
 		return PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
 	}
 
