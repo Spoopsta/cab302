@@ -21,6 +21,7 @@ import asgn2Restaurant.LogHandler;
 public class LogHandlerCustomerTests {
 	// TO DO
 	ArrayList<Customer> customers = new ArrayList<Customer>();
+	ArrayList<Customer> excepTest = new ArrayList<Customer>();
 	
 	@Before
 	public void populateList(){
@@ -76,6 +77,18 @@ public class LogHandlerCustomerTests {
 		assertEquals(customers.get(2).getLocationX(), 0);
 		assertEquals(customers.get(2).getLocationY(), 0);
 		assertEquals(customers.get(2).getMobileNumber(), "0111222333");
+	}
+	//=======================================================================================
+	
+	//Test exception handling of LogHandler.java=============================================
+	@Test(expected = LogHandlerException.class)
+	public void testPopulateCustomerDataSetException() throws CustomerException, LogHandlerException{
+		excepTest = LogHandler.populateCustomerDataset("file.kj");
+	}
+	
+	@Test(expected = LogHandlerException.class)
+	public void testCreateCustomerException() throws CustomerException, LogHandlerException{
+		excepTest.add(LogHandler.createCustomer(null));
 	}
 	//=======================================================================================
 

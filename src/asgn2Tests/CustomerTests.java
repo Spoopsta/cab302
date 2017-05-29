@@ -25,10 +25,10 @@ public class CustomerTests {
 	PickUpCustomer pickup;
 	DriverDeliveryCustomer driver;
 	DroneDeliveryCustomer drone;
+	PickUpCustomer excepTest;
 	
 	@Before
 	public void makeCustomers() throws CustomerException{
-		System.out.println("0123456789");
 		pickup = new PickUpCustomer("John Doe", "0123456789", 0, 0);
 		driver = new DriverDeliveryCustomer("Jane Doe", "0987654321", -3, 4);
 		drone = new DroneDeliveryCustomer("Jimmy James", "0000000000", -3, -5);
@@ -109,5 +109,49 @@ public class CustomerTests {
 		assert(drone.getDeliveryDistance() == Math.sqrt((Math.pow(0 - drone.getLocationX(), 2) + (Math.pow((0-drone.getLocationY()), 2)))));
 	}
 	//=================================================================================================
-
+	
+	//Test Customer.java exception handling============================================================
+	/*Unknown if this can be tested
+	@Test(expected = CustomerException.class)
+	public void testConstructorCustomerTypeException() throws CustomerException{
+	Customer cust = new Customer("Bob Saget", "0123456789", 0, 0, "Pock Up");
+	}*/
+	
+	@Test(expected = CustomerException.class)
+	public void testConstructorNameTooLongException() throws CustomerException{
+	excepTest = new PickUpCustomer("Bob Saget adding more characters", "0123456789", 0, 0);
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void testConstructorEmptyNameException() throws CustomerException{
+	excepTest = new PickUpCustomer("", "0123456789", 0, 0);
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void testConstructorMobileNumTooShortException() throws CustomerException{
+	excepTest = new PickUpCustomer("Bob Saget", "01234567", 0, 0);
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void testConstructorMobileNumTooLongException() throws CustomerException{
+	excepTest = new PickUpCustomer("Bob Saget", "012345678911", 0, 0);
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void testConstructorMobileNumNoZeroStarterException() throws CustomerException{
+	excepTest = new PickUpCustomer("Bob Saget", "1234567890", 0, 0);
+	}
+	
+	//Tests specifically for PickUp customers Constructor----------------------------------------------
+	@Test(expected = CustomerException.class)
+	public void testConstructorXLocationNotZeroException() throws CustomerException{
+	excepTest = new PickUpCustomer("Bob Saget", "0123456789", 1, 0);
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void testConstructorYLocationNotZeroException() throws CustomerException{
+	excepTest = new PickUpCustomer("Bob Saget", "0123456789", 0, 1);
+	}
+	//-------------------------------------------------------------------------------------------------
+	//=================================================================================================
 }
