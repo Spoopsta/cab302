@@ -36,7 +36,6 @@ public class PizzaRestaurant {
 	 * 
 	 */
 	public PizzaRestaurant() {
-		// TO DO
 		customers = new ArrayList<Customer>();
 		pizzas = new ArrayList<Pizza>();
 	}
@@ -57,8 +56,15 @@ public class PizzaRestaurant {
      *
 	 */
 	public boolean processLog(String filename) throws CustomerException, PizzaException, LogHandlerException{
-		this.customers = LogHandler.populateCustomerDataset(filename);
-		this.pizzas = LogHandler.populatePizzaDataset(filename);
+		try{
+			this.customers = LogHandler.populateCustomerDataset(filename);
+			this.pizzas = LogHandler.populatePizzaDataset(filename);
+		}
+		catch(Exception ex){
+			this.customers = new ArrayList<Customer>();
+			this.pizzas = new ArrayList<Pizza>();
+			throw ex;
+		}
 		return true;
 	}
 
@@ -96,7 +102,6 @@ public class PizzaRestaurant {
 	 * @return the number of objects contained in the pizzas field.
 	 */
 	public int getNumPizzaOrders(){
-		// TO DO
 		return pizzas.size();
 	}
 
@@ -131,7 +136,6 @@ public class PizzaRestaurant {
 	 * @return the total profit for all of the Pizza objects in the pizzas field.
 	 */	
 	public double getTotalProfit(){
-		// TO DO
 		double total = 0;
 		
 		for(Pizza pizza: pizzas){
@@ -148,7 +152,6 @@ public class PizzaRestaurant {
 	 * <P> POST:  The pizzas and customers fields are set to their initial empty states
 	 */
 	public void resetDetails(){
-		// TO DO
 		customers = new ArrayList<Customer>();
 		pizzas = new ArrayList<Pizza>();
 	}

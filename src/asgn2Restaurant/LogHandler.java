@@ -129,7 +129,6 @@ public class LogHandler {
 		} catch(Exception ex){
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}
-		System.out.println(values[0]);
 
 		orderTime = LocalTime.parse(values[0]);
 		deliveryTime = LocalTime.parse(values[1]);

@@ -19,7 +19,7 @@ import asgn2Restaurant.PizzaRestaurant;
  * @author Nicholas Stolberg
  */
 public class RestaurantCustomerTests {
-	// TO DO
+	// TODO
 	PizzaRestaurant restaurant = new PizzaRestaurant();
 	double dist = 10 + 0 + Math.sqrt((Math.pow(0 - 3, 2) + (Math.pow((0-4), 2))));
 	
