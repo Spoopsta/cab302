@@ -1,5 +1,6 @@
 package asgn2Pizzas;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 import asgn2Exceptions.PizzaException;
@@ -53,10 +54,11 @@ public abstract class Pizza  {
 		if(deliveryTime.isBefore(orderTime)){
 			throw new PizzaException("Delivery cannot occur before order.");
 		}
-		if(deliveryTime.isBefore(orderTime.plusMinutes(10))){
+		//Need to fix these two.
+		if(deliveryTime.isBefore(orderTime.plusMinutes(-10))){
 			throw new PizzaException("Pizza has not finished cooking yet.");
 		}
-		if(deliveryTime.isAfter(orderTime.plusHours(1).plusMinutes(10))){
+		if(deliveryTime.isAfter(orderTime.plusHours(1).plusMinutes(-10))){
 			throw new PizzaException("Delivery took too long. Pizza disposed of.");
 		}
 		if(!(type.equals("Margherita") | type.equals("Vegetarian")| type.equals("Meat Lovers"))){
