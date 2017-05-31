@@ -36,7 +36,7 @@ public class PizzaTests {
         margherita = new MargheritaPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
         vegetarian = new VegetarianPizza(3, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
     }
-    
+    //Ensure that creation is successful.
     @Test
     public void testPizzaCreation() throws PizzaException{
     	MargheritaPizza testPizza = new MargheritaPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
@@ -47,7 +47,7 @@ public class PizzaTests {
     	assertEquals(testPizzaV.getPizzaType(), "Vegetarian");
     	assertEquals(testPizzaM.getPizzaType(), "Meat Lovers");
     }
-    
+    //Ensure that invalid inputs result in exceptions.
     @Test (expected=PizzaException.class)
     public void testPizzaExceptionQuantity() throws PizzaException{
     	MargheritaPizza test = new MargheritaPizza(12, LocalTime.parse("19:00:00"), LocalTime.parse("19:20:00"));
@@ -57,6 +57,11 @@ public class PizzaTests {
     public void testPizzaExceptionHour() throws PizzaException{
     	VegetarianPizza test = new VegetarianPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("18:45:20"));
     	test.getOrderCost();
+    }
+    //Ensure that an exception is thrown if the delivery is too late.
+    @Test (expected = PizzaException.class)
+    public void testDeliveryTooLate() throws PizzaException{
+    	VegetarianPizza test = new VegetarianPizza(1, LocalTime.parse("18:40:20"), LocalTime.parse("20:45:20"));
     }
     @Test
     public void testGetCostPerPizza(){
