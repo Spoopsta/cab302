@@ -96,15 +96,25 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Customer createCustomer(String line) throws CustomerException, LogHandlerException{
-		// TO DO
-		//Example string: 19:00:00,19:20:00,Casey Jones,0123456789,DVC,5,5,PZV,2
+		//Declare the array of Values from the line.
 		String[] values;
+		//Attempt to split the values out from the input line; if this fails, throw a LogHandlerException.
 		try{
 			values = line.split(",");
 		} catch(Exception ex){
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}
-		return CustomerFactory.getCustomer(values[4], values[2], values[3], Integer.parseInt(values[5]), Integer.parseInt(values[6]));
+		//If splitting was successful, try to return the values from the line.
+		//If this input creates a CustomerException, throw that exception.
+		//Otherwise, any other exception should throw a LogHandler exception.
+		try{
+			return CustomerFactory.getCustomer(values[4], values[2], values[3], Integer.parseInt(values[5]), Integer.parseInt(values[6]));
+		} catch(CustomerException cx){
+			throw cx;
+		}
+		catch (Exception ex){
+			throw new LogHandlerException("The log line :" + line + " is not a valid input; " + ex);
+		}
 	}
 	
 	/**
