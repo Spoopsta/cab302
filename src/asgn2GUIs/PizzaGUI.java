@@ -43,9 +43,19 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	
 	LinkedList<String> orderLog = new LinkedList<String>();
 	LinkedList<String> customerLog = new LinkedList<String>();
+	double totalProfit = 0;
+	double totalDistance = 0;
 	
+	//Create Main Panels
 	private JPanel btnPanel;
 	private JPanel txtFieldPanel;
+	private JPanel totalsPanel;
+	
+	//Create Sub Panels
+	private JPanel ordersPanel;
+	private JPanel customersPanel;
+	private JPanel profitPanel;
+	private JPanel distancePanel;
 	
 	private JTextArea pizzaText;
 	private JTextArea customerText;
@@ -55,6 +65,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	
 	private JButton loadLogFileBTN;
 	private JButton displayLogBTN;
+	private JButton displayTotalsBTN;
+	private JButton resetBTN;
 	private JFileChooser chooser = new JFileChooser();
 		
 	private PizzaRestaurant restaurant = new PizzaRestaurant();
@@ -71,21 +83,33 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	private void createGUI(){		
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setLayout(new BorderLayout());
 		
-		pizzaText = new JTextArea("Pizza" + "\n");
-		customerText = new JTextArea("Customer" + "\n");
+		pizzaText = new JTextArea(5, 50);
+		customerText = new JTextArea(5, 50);
 		
 		txtFieldPanel = createPanel(Color.WHITE);
-		txtFieldPanel.setPreferredSize(new Dimension(450, 210));
+		txtFieldPanel.setPreferredSize(new Dimension(WIDTH, 340));
 		
-		this.getContentPane().add(txtFieldPanel,BorderLayout.NORTH);		
+		totalsPanel = createPanel(Color.WHITE);
+		totalsPanel.setPreferredSize(new Dimension(WIDTH, -330));
+		
+		pizzaScroll = new JScrollPane( txtFieldPanel );
+	//	this.add(txtFieldPanel, BoxLayout.PAGE_AXIS);	
+		//this.getContentPane().add(pizzaScroll, BorderLayout.CENTER);
+		//this.getContentPane().add(totalsPanel, BorderLayout.NORTH);
 		
 		btnPanel = createPanel(Color.GRAY);
 		this.getContentPane().add(btnPanel,BorderLayout.SOUTH);
 		
 		loadLogFileBTN = createButton("Load Log File.");
 		displayLogBTN = createButton("Display Log.");
+		displayTotalsBTN = createButton("Display Totals");
+		resetBTN = createButton("Reset");
+		displayLogBTN.setEnabled(false);
+		displayTotalsBTN.setEnabled(false);
+		resetBTN.setEnabled(false);
 		
 		layoutButtonPanel();
 	
@@ -98,11 +122,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		pizzaText.setEditable(false);
 		customerText.setEditable(false);
 		
-		pizzaScroll = new JScrollPane( pizzaText );
-		customerScroll = new JScrollPane( customerText );
-		
 		txtFieldPanel.add(pizzaText, BorderLayout.CENTER);
-		txtFieldPanel.add(customerText, BorderLayout.CENTER);
+		//txtFieldPanel.add(customerText, BorderLayout.CENTER);
+	
+		customerScroll = new JScrollPane( customerText );		
 	}
 	
 	private JButton createButton(String btnText){
@@ -130,8 +153,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		constraints.weightx = 100;
 		constraints.weighty = 100;
 		
+		addToPanel(btnPanel, resetBTN, constraints, 30, 0, 2, 1);
 		addToPanel(btnPanel, loadLogFileBTN,constraints, 0, 0,2,1);
 		addToPanel(btnPanel, displayLogBTN,constraints,10,0,2,1);
+		addToPanel(btnPanel, displayTotalsBTN, constraints, 20,0,2,1);
 	} 
 	
 	/**
@@ -176,6 +201,32 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		}
 	}
 	
+	private void calculateTotals() throws PizzaException, CustomerException{
+		totalProfit = 0;
+		totalDistance = 0;
+		for(int i = 0; i < restaurant.getNumPizzaOrders(); i++){
+			totalProfit += restaurant.getPizzaByIndex(i).getOrderProfit(); 
+		}
+		for(int i = 0; i < restaurant.getNumCustomerOrders(); i++){
+			totalDistance += restaurant.getCustomerByIndex(i).getDeliveryDistance(); 
+		}
+	}
+	
+	private void reset(){
+		orderLog.clear();
+		customerLog.clear();
+		totalProfit = 0;
+		totalDistance = 0;
+		restaurant = new PizzaRestaurant();
+		
+		pizzaText.setText("");
+		customerText.setText("");
+		
+		displayLogBTN.setEnabled(false);
+		displayTotalsBTN.setEnabled(false);
+		resetBTN.setEnabled(false);
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -203,6 +254,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
                 	System.out.println(Path);
                 	if(restaurant.processLog(Path)){
                 		createLogString();
+                		calculateTotals();
+                		displayLogBTN.setEnabled(true);
+                		displayTotalsBTN.setEnabled(true);
+                		resetBTN.setEnabled(true);
                 	}
 				} catch (CustomerException | PizzaException | LogHandlerException e1) {
 					 //TODO Auto-generated catch block
@@ -213,8 +268,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
             }			
 		}
 		if (src == displayLogBTN){		
-			pizzaText.setText("");
-			customerText.setText("");
+			pizzaText.setText("Orders" + "\n");
+			customerText.setText("Customers" + "\n\n");
 			
 			for(String item: orderLog){
 				pizzaText.append(item);
@@ -226,6 +281,12 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			}
 			
 			displayLog();
+		}
+		if(src == displayTotalsBTN){
+			
+		}
+		if(src == resetBTN){
+			reset();
 		}
 	}
 	

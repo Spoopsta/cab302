@@ -31,15 +31,15 @@ public class PizzaFactory {
 	public static Pizza getPizza(String pizzaCode, int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException{
 		// TO DO
 		if(pizzaCode.equals("PZM")){
-			MargheritaPizza pizza = new MargheritaPizza(quantity, deliveryTime, deliveryTime);
+			MargheritaPizza pizza = new MargheritaPizza(quantity, orderTime, deliveryTime);
 			return pizza;
 		}
 		else if(pizzaCode.equals("PZV")){
-			VegetarianPizza pizza = new VegetarianPizza(quantity, deliveryTime, deliveryTime);
+			VegetarianPizza pizza = new VegetarianPizza(quantity, orderTime, deliveryTime);
 			return pizza;
 		}
 		else if(pizzaCode.equals("PZL")){
-			MeatLoversPizza pizza = new MeatLoversPizza(quantity, deliveryTime, deliveryTime);
+			MeatLoversPizza pizza = new MeatLoversPizza(quantity, orderTime, deliveryTime);
 			return pizza;
 		}
 		else{

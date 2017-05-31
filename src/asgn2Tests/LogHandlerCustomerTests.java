@@ -80,6 +80,19 @@ public class LogHandlerCustomerTests {
 	}
 	//=======================================================================================
 	
+	//test log handling with incorrect inputs================================================
+	@Test(expected = LogHandlerException.class)
+	public void testLogHandlerNotLogFile() throws CustomerException, LogHandlerException{
+		customers = LogHandler.populateCustomerDataset("not a log file");
+	}
+	
+	@Test(expected = LogHandlerException.class)
+	public void testLogHandlerBadString() throws CustomerException, LogHandlerException{
+		Customer test;
+		test = LogHandler.createCustomer("not a log file");
+	}
+	//=======================================================================================
+	
 	//Test exception handling of LogHandler.java=============================================
 	@Test(expected = LogHandlerException.class)
 	public void testPopulateCustomerDataSetException() throws CustomerException, LogHandlerException{
