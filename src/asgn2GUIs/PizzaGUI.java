@@ -41,12 +41,14 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = 700;
 	
+	//Create Variable to contain log info.
 	LinkedList<String> orderLog = new LinkedList<String>();
 	LinkedList<String> customerLog = new LinkedList<String>();
 	double totalProfit = 0;
 	double totalDistance = 0;
 	
 	//Create Main Panels
+	private JPanel main = new JPanel();
 	private JPanel btnPanel;
 	private JPanel txtFieldPanel;
 	private JPanel totalsPanel;
@@ -57,12 +59,23 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	private JPanel profitPanel;
 	private JPanel distancePanel;
 	
+	//Create Text areas
 	private JTextArea pizzaText;
 	private JTextArea customerText;
+	private JTextArea profitText;
+	private JTextArea distanceText;
 	
+	//Create Labels.
+	private JLabel ordersLBL;
+	private JLabel customersLBL;
+	private JLabel profitLBL;
+	private JLabel distanceLBL;
+	
+	//Scroll Pane
 	JScrollPane pizzaScroll;
 	JScrollPane customerScroll;
 	
+	//Buttons and chooser
 	private JButton loadLogFileBTN;
 	private JButton displayLogBTN;
 	private JButton displayTotalsBTN;
@@ -80,29 +93,72 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		super(title);
 	}
 	
-	private void createGUI(){		
+	private void createGUI(){	
+		//Create window
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setLayout(new BorderLayout());
 		
-		pizzaText = new JTextArea(5, 50);
-		customerText = new JTextArea(5, 50);
+		//Set main panel to use box layout
+		main.setLayout(new BoxLayout(main, BoxLayout.PAGE_AXIS));
+		
+		//initialise text areas
+		pizzaText = new JTextArea();
+		pizzaText.setAlignmentX(CENTER_ALIGNMENT);
+		customerText = new JTextArea();
+		customerText.setAlignmentX(CENTER_ALIGNMENT);
+		profitText = new JTextArea();
+		profitText.setAlignmentX(CENTER_ALIGNMENT);
+		distanceText = new JTextArea();
+		distanceText.setAlignmentX(CENTER_ALIGNMENT);
+		
+		//initialise panel and set size etc
+		ordersPanel = createPanel(Color.WHITE);
+		customersPanel = createPanel(Color.WHITE);
+		profitPanel = createPanel(Color.WHITE);
+		distancePanel = createPanel(Color.WHITE);
+		
+		ordersPanel.setLayout(new BoxLayout(ordersPanel, BoxLayout.PAGE_AXIS));
+		customersPanel.setLayout(new BoxLayout(customersPanel, BoxLayout.PAGE_AXIS));
+		profitPanel.setLayout(new BoxLayout(profitPanel, BoxLayout.PAGE_AXIS));
+		distancePanel.setLayout(new BoxLayout(distancePanel, BoxLayout.PAGE_AXIS));
+		
+		ordersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
+		ordersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		ordersPanel.setAlignmentX(CENTER_ALIGNMENT);
+		customersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
+		customersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
+		profitPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		distancePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		profitPanel.setPreferredSize(new Dimension(WIDTH/2, 300));
+		distancePanel.setPreferredSize(new Dimension(WIDTH/2, 300));
 		
 		txtFieldPanel = createPanel(Color.WHITE);
+		txtFieldPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		txtFieldPanel.setLayout(new BoxLayout(txtFieldPanel, BoxLayout.LINE_AXIS));
 		txtFieldPanel.setPreferredSize(new Dimension(WIDTH, 340));
+		txtFieldPanel.add(ordersPanel);
+		txtFieldPanel.add(customersPanel);
 		
 		totalsPanel = createPanel(Color.WHITE);
-		totalsPanel.setPreferredSize(new Dimension(WIDTH, -330));
+		totalsPanel.setPreferredSize(new Dimension(WIDTH, 300));
+		totalsPanel.setLayout(new BoxLayout(totalsPanel, BoxLayout.LINE_AXIS));
+		totalsPanel.add(profitPanel);
+		totalsPanel.add(distancePanel);
 		
 		pizzaScroll = new JScrollPane( txtFieldPanel );
-	//	this.add(txtFieldPanel, BoxLayout.PAGE_AXIS);	
-		//this.getContentPane().add(pizzaScroll, BorderLayout.CENTER);
-		//this.getContentPane().add(totalsPanel, BorderLayout.NORTH);
 		
+		//set up button panel and add to main frame.
 		btnPanel = createPanel(Color.GRAY);
+		this.getContentPane().add(main, BorderLayout.PAGE_START);
 		this.getContentPane().add(btnPanel,BorderLayout.SOUTH);
 		
+		//put secondary panels in main panel
+		main.add(txtFieldPanel);
+		main.add(totalsPanel);
+		
+		//Initialise buttons and set correct ones to un-enabled.
 		loadLogFileBTN = createButton("Load Log File.");
 		displayLogBTN = createButton("Display Log.");
 		displayTotalsBTN = createButton("Display Totals");
@@ -111,21 +167,34 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		displayTotalsBTN.setEnabled(false);
 		resetBTN.setEnabled(false);
 		
+		//initialies Labels.
+		ordersLBL = createLabel("Pizza Orders", ordersPanel);
+		customersLBL = createLabel("Customers", customersPanel);
+		profitLBL = createLabel("Total Profit", profitPanel);
+		distanceLBL = createLabel("Total Distance", distancePanel);
+		
 		layoutButtonPanel();
 	
 		this.setVisible(true);
 	}
 	
 	private void displayLog(){			
-		pizzaText.setColumns(20);
-		customerText.setColumns(20);
+		//pizzaText.setColumns(20);
+		//customerText.setColumns(20);
 		pizzaText.setEditable(false);
 		customerText.setEditable(false);
 		
-		txtFieldPanel.add(pizzaText, BorderLayout.CENTER);
-		//txtFieldPanel.add(customerText, BorderLayout.CENTER);
+		ordersPanel.add(pizzaText);
+		customersPanel.add(customerText);
 	
-		customerScroll = new JScrollPane( customerText );		
+		//customerScroll = new JScrollPane( customerText );		
+	}
+	
+	private void displayTotals(){
+		profitText.setText(Double.toString(totalProfit));
+		distanceText.setText(Double.toString(totalDistance));
+		profitPanel.add(profitText);
+		distancePanel.add(distanceText);
 	}
 	
 	private JButton createButton(String btnText){
@@ -140,6 +209,13 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		panel.setBackground(c);
 		return panel;
 	} 
+	
+	private JLabel createLabel(String text, JPanel p){
+		JLabel l = new JLabel(text);
+		l.setAlignmentX(CENTER_ALIGNMENT);
+		p.add(l);
+		return l;
+	}
 	
 	private void layoutButtonPanel() {
 		GridBagLayout layout = new GridBagLayout();
@@ -221,6 +297,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		
 		pizzaText.setText("");
 		customerText.setText("");
+		profitText.setText("");
+		distanceText.setText("");
 		
 		displayLogBTN.setEnabled(false);
 		displayTotalsBTN.setEnabled(false);
@@ -268,7 +346,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
             }			
 		}
 		if (src == displayLogBTN){		
-			pizzaText.setText("Orders" + "\n");
+			pizzaText.setText("Orders" + "\n\n");
 			customerText.setText("Customers" + "\n\n");
 			
 			for(String item: orderLog){
@@ -283,7 +361,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			displayLog();
 		}
 		if(src == displayTotalsBTN){
-			
+			displayTotals();
 		}
 		if(src == resetBTN){
 			reset();
