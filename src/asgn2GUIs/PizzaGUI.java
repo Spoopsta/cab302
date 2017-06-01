@@ -123,11 +123,20 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		profitPanel.setLayout(new BoxLayout(profitPanel, BoxLayout.PAGE_AXIS));
 		distancePanel.setLayout(new BoxLayout(distancePanel, BoxLayout.PAGE_AXIS));
 		
-		ordersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
+		/*ordersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
 		ordersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		ordersPanel.setAlignmentX(CENTER_ALIGNMENT);
 		customersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
-		customersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		customersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));*/
+		
+		customerScroll = new JScrollPane(customerText);
+		pizzaScroll = new JScrollPane( pizzaText );
+		
+		pizzaScroll.setPreferredSize(new Dimension(WIDTH/2, 340));
+		pizzaScroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		pizzaScroll.setAlignmentX(CENTER_ALIGNMENT);
+		customerScroll.setPreferredSize(new Dimension(WIDTH/2, 340));
+		customerScroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		profitPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		distancePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -146,8 +155,6 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		totalsPanel.setLayout(new BoxLayout(totalsPanel, BoxLayout.LINE_AXIS));
 		totalsPanel.add(profitPanel);
 		totalsPanel.add(distancePanel);
-		
-		pizzaScroll = new JScrollPane( txtFieldPanel );
 		
 		//set up button panel and add to main frame.
 		btnPanel = createPanel(Color.GRAY);
@@ -179,13 +186,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	private void displayLog(){			
-		//pizzaText.setColumns(20);
-		//customerText.setColumns(20);
 		pizzaText.setEditable(false);
 		customerText.setEditable(false);
 		
-		ordersPanel.add(pizzaText);
-		customersPanel.add(customerText);
+		ordersPanel.add(pizzaScroll);
+		customersPanel.add(customerScroll);
 	
 		//customerScroll = new JScrollPane( customerText );		
 	}
