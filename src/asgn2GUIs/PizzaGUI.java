@@ -103,13 +103,13 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		main.setLayout(new BoxLayout(main, BoxLayout.PAGE_AXIS));
 		
 		//initialise text areas
-		pizzaText = new JTextArea();
+		pizzaText = new JTextArea("");
 		pizzaText.setAlignmentX(CENTER_ALIGNMENT);
-		customerText = new JTextArea();
+		customerText = new JTextArea("");
 		customerText.setAlignmentX(CENTER_ALIGNMENT);
-		profitText = new JTextArea();
+		profitText = new JTextArea("");
 		profitText.setAlignmentX(CENTER_ALIGNMENT);
-		distanceText = new JTextArea();
+		distanceText = new JTextArea("");
 		distanceText.setAlignmentX(CENTER_ALIGNMENT);
 		
 		//initialise panel and set size etc
@@ -181,7 +181,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		distanceLBL = createLabel("Total Distance", distancePanel);
 		
 		layoutButtonPanel();
-	
+		
+		displayLog();
+		displayTotals();
+		
 		this.setVisible(true);
 	}
 	
@@ -196,8 +199,6 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	private void displayTotals(){
-		profitText.setText(Double.toString(totalProfit));
-		distanceText.setText(Double.toString(totalDistance));
 		profitPanel.add(profitText);
 		distancePanel.add(distanceText);
 	}
@@ -366,6 +367,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			displayLog();
 		}
 		if(src == displayTotalsBTN){
+			profitText.setText(Double.toString(totalProfit));
+			distanceText.setText(Double.toString(totalDistance));
 			displayTotals();
 		}
 		if(src == resetBTN){
