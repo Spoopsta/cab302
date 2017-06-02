@@ -1,8 +1,6 @@
 package asgn2Pizzas;
 
-import java.time.Duration;
 import java.time.LocalTime;
-import java.time.temporal.TemporalAmount;
 
 import asgn2Exceptions.PizzaException;
 
@@ -19,8 +17,6 @@ import asgn2Exceptions.PizzaException;
 public abstract class Pizza  {
 	
 	private int quantity;
-	private LocalTime orderTime;
-	private LocalTime deliveryTime;
 	private String pizzaType;
 	private double price;
 	private double totalPrice;
@@ -66,8 +62,6 @@ public abstract class Pizza  {
 		}
 		
 		this.quantity = quantity;
-		this.orderTime = orderTime;
-		this.deliveryTime = deliveryTime;
 		this.pizzaType = type;
 		this.price = price;
 		this.totalPrice = this.price * this.quantity;

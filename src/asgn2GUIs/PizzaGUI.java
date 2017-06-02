@@ -36,6 +36,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Nicholas Stolberg and Niall Stone
  *
  */
+@SuppressWarnings("unused")
 public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionListener {	
 	
 	private static final long serialVersionUID = -7031008862559936404L;
@@ -90,7 +91,6 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	 * @param title - The title for the supertype JFrame
 	 */
 	public PizzaGUI(String title) {
-		// TO DO
 		super(title);
 	}
 	
@@ -119,31 +119,30 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		profitPanel = createPanel(Color.WHITE);
 		distancePanel = createPanel(Color.WHITE);
 		
+		//Set the layout setting for all panels.
 		ordersPanel.setLayout(new BoxLayout(ordersPanel, BoxLayout.PAGE_AXIS));
 		customersPanel.setLayout(new BoxLayout(customersPanel, BoxLayout.PAGE_AXIS));
 		profitPanel.setLayout(new BoxLayout(profitPanel, BoxLayout.PAGE_AXIS));
 		distancePanel.setLayout(new BoxLayout(distancePanel, BoxLayout.PAGE_AXIS));
 		
-		/*ordersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
-		ordersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		ordersPanel.setAlignmentX(CENTER_ALIGNMENT);
-		customersPanel.setPreferredSize(new Dimension(WIDTH/2, 340));
-		customersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));*/
-		
+		//initialise scrollpanes.
 		customerScroll = new JScrollPane(customerText);
 		pizzaScroll = new JScrollPane( pizzaText );
 		
+		//set size of scroll Pane
 		pizzaScroll.setPreferredSize(new Dimension(WIDTH/2, 340));
 		pizzaScroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		pizzaScroll.setAlignmentX(CENTER_ALIGNMENT);
 		customerScroll.setPreferredSize(new Dimension(WIDTH/2, 340));
 		customerScroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		//Put border around panels.
 		profitPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		distancePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		profitPanel.setPreferredSize(new Dimension(WIDTH/2, 300));
 		distancePanel.setPreferredSize(new Dimension(WIDTH/2, 300));
 		
+		//initialise and set specifications of panel.
 		txtFieldPanel = createPanel(Color.WHITE);
 		txtFieldPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		txtFieldPanel.setLayout(new BoxLayout(txtFieldPanel, BoxLayout.LINE_AXIS));
@@ -151,8 +150,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		txtFieldPanel.add(ordersPanel);
 		txtFieldPanel.add(customersPanel);
 		
+		//initialise and set specifications of panel.
 		totalsPanel = createPanel(Color.WHITE);
 		totalsPanel.setPreferredSize(new Dimension(WIDTH, 300));
+		totalsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		totalsPanel.setLayout(new BoxLayout(totalsPanel, BoxLayout.LINE_AXIS));
 		totalsPanel.add(profitPanel);
 		totalsPanel.add(distancePanel);
@@ -270,8 +271,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	private void createLogString() throws PizzaException, CustomerException{
+		//Clear lists.
 		orderLog.clear();
 		customerLog.clear();
+		
+		//Fill lists with necessary information.
 		for(int i = 0; i < restaurant.getNumPizzaOrders(); i++){
 			orderLog.add("Pizza Type: " + restaurant.getPizzaByIndex(i).getPizzaType() + "\n"
 					+ "Quantity: " + restaurant.getPizzaByIndex(i).getQuantity() + "\n"
@@ -331,34 +335,43 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		Object src = e.getSource();
+		
+		//When specified btn is pressed.
 		if (src==loadLogFileBTN){
+			//Open file chooser
 			int returnVal = chooser.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
-                //This is where a real application would open the file.
                 System.out.println("Opening: " + file.getName() + ".");
                 try {
+                	//replace pesky back slashes.
                 	String Path = null;
                 	Path = file.getAbsolutePath().replaceAll("\\\\", "/");
                 	System.out.println(Path);
+                	
+                	//Process Log.
                 	if(restaurant.processLog(Path)){
                 		createLogString();
                 		calculateTotals();
+                		
+                		//Enable buttons to be pressed.
                 		displayLogBTN.setEnabled(true);
                 		displayTotalsBTN.setEnabled(true);
                 		resetBTN.setEnabled(true);
                 	}
 				} catch (CustomerException | PizzaException | LogHandlerException e1) {
-					 //TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
             } else {
             	System.out.println("Open command cancelled by user.");
             }			
 		}
+		
+		//when specified button is pressed.
 		if (src == displayLogBTN){		
+			
+			//add header to text box and append all necessary informaiton.
 			pizzaText.setText("Orders" + "\n\n");
 			customerText.setText("Customers" + "\n\n");
 			
@@ -374,6 +387,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			displayLog();
 		}
 		if(src == displayTotalsBTN){
+			//Set text to display necessary information.
+			Math.round((totalDistance * 100.0) / 100.0);
 			profitText.setText("$" + Double.toString(totalProfit));
 			distanceText.setText(Double.toString(totalDistance));
 			displayTotals();
@@ -385,7 +400,6 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	
 	@Override
 	public void run() {
-		// TO DO
 		createGUI();
 	}
 

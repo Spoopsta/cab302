@@ -1,9 +1,7 @@
 package asgn2Restaurant;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -139,13 +137,20 @@ public class LogHandler {
 		} catch(Exception ex){
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}
-
-		orderTime = LocalTime.parse(values[0]);
-		deliveryTime = LocalTime.parse(values[1]);
-		quantity = Integer.parseInt(values[8]);
-		pizzaCode = values[7];
-
-		return PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
+		
+		try{
+			orderTime = LocalTime.parse(values[0]);
+			deliveryTime = LocalTime.parse(values[1]);
+			quantity = Integer.parseInt(values[8]);
+			pizzaCode = values[7];
+			
+			return PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
+		} catch(PizzaException px){
+			throw px;
+		}
+		catch (Exception ex){
+			throw new LogHandlerException("The log line :" + line + " is not a valid input; " + ex);
+		}
 	}
 
 }
