@@ -15,6 +15,7 @@ import asgn2Pizzas.MeatLoversPizza;
 import asgn2Pizzas.PizzaTopping;
 import asgn2Pizzas.VegetarianPizza;
 
+@SuppressWarnings("unused")
 
 /**
  * A class that that tests the asgn2Pizzas.MargheritaPizza, asgn2Pizzas.VegetarianPizza, asgn2Pizzas.MeatLoversPizza classes. 
@@ -48,11 +49,18 @@ public class PizzaTests {
     	assertEquals(testPizzaM.getPizzaType(), "Meat Lovers");
     }
     //Ensure that invalid inputs result in exceptions.
+    //Here, test that an extreme quantity results in an exception.
     @Test (expected=PizzaException.class)
     public void testPizzaExceptionQuantity() throws PizzaException{
     	MargheritaPizza test = new MargheritaPizza(12, LocalTime.parse("19:00:00"), LocalTime.parse("19:20:00"));
     	test.getOrderCost();
     }
+    //Ensure Zero-Quantity orders also thrown an exception
+    @Test (expected=PizzaException.class)
+    public void testPizzaExceptionQuantityZero() throws PizzaException{
+    	MargheritaPizza test = new MargheritaPizza(0, LocalTime.parse("19:00:00"), LocalTime.parse("19:20:00"));
+    	test.getOrderCost();
+    }    //Ensure exception is thrown if the delivery time is before the order time.
     @Test (expected=PizzaException.class)
     public void testPizzaExceptionHour() throws PizzaException{
     	VegetarianPizza test = new VegetarianPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("18:45:20"));
@@ -63,6 +71,16 @@ public class PizzaTests {
     public void testDeliveryTooLate() throws PizzaException{
     	VegetarianPizza test = new VegetarianPizza(1, LocalTime.parse("18:40:20"), LocalTime.parse("20:45:20"));
     }
+    //Ensure an exception is thrown if the delivery time is less than 10 minutes after ordering.
+    @Test (expected = PizzaException.class)
+    public void testDeliveryCookingTime() throws PizzaException{
+		VegetarianPizza test = new VegetarianPizza(1, LocalTime.parse("18:40:20"), LocalTime.parse("18:45:20"));
+    }
+    
+    //Test each return method to ensure its validity. Note that
+    //In order to ensure separation of test functionality and tested code, these
+    //functions have pre-programmed values, many of which will not work for differing
+    //Log files.
     @Test
     public void testGetCostPerPizza(){
     	assertEquals(5.0, meatLovers.getCostPerPizza(),0.001);

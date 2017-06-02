@@ -22,6 +22,7 @@ public class PizzaFactoryTests {
 	Pizza mgh;
 	Pizza mtl;
 	Pizza veg;
+	//initialize variables per-test.
 	@Before
 	public void Init() throws PizzaException{
 		mgh = PizzaFactory.getPizza("PZM", 1, LocalTime.parse("21:00:00"),LocalTime.parse("21:35:00"));
@@ -29,6 +30,8 @@ public class PizzaFactoryTests {
 		veg = PizzaFactory.getPizza("PZV", 3, LocalTime.parse("21:00:00"),LocalTime.parse("21:35:00"));
 	}
 	
+	//For each possible input to the PizzaFactory Pizza-Type, test that the creation through the Factory.getPizza method was successful.
+	//Ensure success by testing each possible input which is handled through .getPizza().
 	@Test
 	public void testMargheritaFactory(){
     	assertEquals(mgh.getPizzaType(), "Margherita"); 
@@ -56,6 +59,7 @@ public class PizzaFactoryTests {
     	assertEquals(13.5, veg.getOrderProfit(), 0.001);
     	assert(veg.containsTopping(PizzaTopping.EGGPLANT));
 	}
+	//Ensure that in the event of an invalid code, the correct exception is sent.
 	@Test (expected = PizzaException.class)
 	public void testFactoryException() throws PizzaException{
 		@SuppressWarnings("unused")
