@@ -20,6 +20,7 @@ import asgn2Restaurant.PizzaRestaurant;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -192,6 +193,9 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		pizzaText.setEditable(false);
 		customerText.setEditable(false);
 		
+		pizzaText.setBorder(new EmptyBorder(10,10,10,10));
+		customerText.setBorder(new EmptyBorder(10,10,10,10));
+		
 		ordersPanel.add(pizzaScroll);
 		customersPanel.add(customerScroll);
 	
@@ -199,6 +203,9 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	private void displayTotals(){
+		profitText.setBorder(new EmptyBorder(10,10,10,10));
+		distanceText.setBorder(new EmptyBorder(10,10,10,10));
+		
 		profitPanel.add(profitText);
 		distancePanel.add(distanceText);
 	}
