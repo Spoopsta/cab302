@@ -37,7 +37,9 @@ public abstract class Pizza  {
 	 * @param deliveryTime - The time that the pizza was delivered to the customer
 	 * @param type -  A human understandable description of this Pizza type
 	 * @param price - The price that the pizza is sold to the customer
-	 * @throws PizzaException if supplied parameters are invalid 
+	 * @throws PizzaException if quantity is greater then 10 or less then 1, if the order was made after 11pm or before 7pm, if the 
+	 * delivery time is before the order time, if the delivery time is before the pizza has finished cooking, if the pizza has gone
+	 * 1 hour without being delivered and if the pizza type is wrong.
 	 * 
 	 */
 	public Pizza(int quantity, LocalTime orderTime, LocalTime deliveryTime, String type, double price) throws PizzaException{
