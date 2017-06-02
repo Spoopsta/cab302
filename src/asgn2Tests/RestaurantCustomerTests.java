@@ -34,6 +34,20 @@ public class RestaurantCustomerTests {
 	}
 	
 	@Test
+	public void testProcessLog() throws CustomerException, PizzaException, LogHandlerException{
+		PizzaRestaurant testProcessLog = new PizzaRestaurant();
+		assert(testProcessLog.processLog(".//logs/20170101.txt"));
+	}
+	
+	@Test
+	public void testWithMultipleLogs() throws CustomerException, PizzaException, LogHandlerException{
+		PizzaRestaurant testMultipleLogs = new PizzaRestaurant();
+		assert(testMultipleLogs.processLog(".//logs/20170101.txt"));
+		assert(testMultipleLogs.processLog(".//logs/20170102.txt"));
+		assert(testMultipleLogs.processLog(".//logs/20170103.txt"));
+	}
+	
+	@Test
 	public void testGetCustomerByIndex() throws CustomerException{
 		String custName = null;
 		custName = restaurant.getCustomerByIndex(0).getName();
@@ -55,6 +69,12 @@ public class RestaurantCustomerTests {
 	@Test(expected = CustomerException.class)
 	public void testGetCustomerByIndexException() throws CustomerException{
 		restaurant.getCustomerByIndex(4);
+	}
+	
+	@Test(expected = LogHandlerException.class)
+	public void testProcessLogExceptionHandling() throws CustomerException, PizzaException, LogHandlerException{
+		PizzaRestaurant testFailedLog = new PizzaRestaurant();
+		testFailedLog.processLog("Bad Input");
 	}
 	
 }

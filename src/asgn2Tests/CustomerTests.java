@@ -110,13 +110,7 @@ public class CustomerTests {
 	}
 	//=================================================================================================
 	
-	//Test Customer.java exception handling============================================================
-	/*Unknown if this can be tested
-	@Test(expected = CustomerException.class)
-	public void testConstructorCustomerTypeException() throws CustomerException{
-	Customer cust = new Customer("Bob Saget", "0123456789", 0, 0, "Pock Up");
-	}*/
-	
+	//Test Customer.java exception handling============================================================	
 	@Test(expected = CustomerException.class)
 	public void testConstructorNameTooLongException() throws CustomerException{
 	excepTest = new PickUpCustomer("Bob Saget adding more characters", "0123456789", 0, 0);

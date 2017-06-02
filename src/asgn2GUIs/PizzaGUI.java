@@ -388,7 +388,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		}
 		if(src == displayTotalsBTN){
 			//Set text to display necessary information.
-			Math.round((totalDistance * 100.0) / 100.0);
+			totalDistance = Math.round((totalDistance * 100.0) / 100.0);
 			profitText.setText("$" + Double.toString(totalProfit));
 			distanceText.setText(Double.toString(totalDistance));
 			displayTotals();
