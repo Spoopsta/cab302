@@ -72,6 +72,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	private JLabel customersLBL;
 	private JLabel profitLBL;
 	private JLabel distanceLBL;
+	private JLabel GuiStateLBL;
 	
 	//Scroll Pane
 	JScrollPane pizzaScroll;
@@ -102,6 +103,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		
 		//Set main panel to use box layout
 		main.setLayout(new BoxLayout(main, BoxLayout.PAGE_AXIS));
+		
+		//Initialise GuiState label
+		GuiStateLBL = new JLabel("Program Started.");
+		GuiStateLBL.setAlignmentX(CENTER_ALIGNMENT);
 		
 		//initialise text areas
 		pizzaText = new JTextArea("");
@@ -139,8 +144,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		//Put border around panels.
 		profitPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		distancePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		profitPanel.setPreferredSize(new Dimension(WIDTH/2, 300));
-		distancePanel.setPreferredSize(new Dimension(WIDTH/2, 300));
+		profitPanel.setPreferredSize(new Dimension(WIDTH/2, 270));
+		distancePanel.setPreferredSize(new Dimension(WIDTH/2, 270));
 		
 		//initialise and set specifications of panel.
 		txtFieldPanel = createPanel(Color.WHITE);
@@ -152,7 +157,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		
 		//initialise and set specifications of panel.
 		totalsPanel = createPanel(Color.WHITE);
-		totalsPanel.setPreferredSize(new Dimension(WIDTH, 300));
+		totalsPanel.setPreferredSize(new Dimension(WIDTH, 270));
 		totalsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		totalsPanel.setLayout(new BoxLayout(totalsPanel, BoxLayout.LINE_AXIS));
 		totalsPanel.add(profitPanel);
@@ -166,6 +171,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		//put secondary panels in main panel
 		main.add(txtFieldPanel);
 		main.add(totalsPanel);
+		main.add(GuiStateLBL);
 		
 		//Initialise buttons and set correct ones to un-enabled.
 		loadLogFileBTN = createButton("Load Log File.");
@@ -199,8 +205,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		
 		ordersPanel.add(pizzaScroll);
 		customersPanel.add(customerScroll);
-	
-		//customerScroll = new JScrollPane( customerText );		
+				
 	}
 	
 	private void displayTotals(){
@@ -345,7 +350,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
                 File file = chooser.getSelectedFile();
                 System.out.println("Opening: " + file.getName() + ".");
                 try {
-                	//replace pesky back slashes.
+                	//replace pesky backslashes.
                 	String Path = null;
                 	Path = file.getAbsolutePath().replaceAll("\\\\", "/");
                 	System.out.println(Path);
@@ -359,17 +364,23 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
                 		displayLogBTN.setEnabled(true);
                 		displayTotalsBTN.setEnabled(true);
                 		resetBTN.setEnabled(true);
+                		
+                		GuiStateLBL.setText("Selected file " + file.getName() + " successfully parsed.");
                 	}
 				} catch (CustomerException | PizzaException | LogHandlerException e1) {
+					GuiStateLBL.setText("Unable to open or process selected file.");
 					e1.printStackTrace();
 				}
             } else {
+            	GuiStateLBL.setText("Open command cancelled by user.");
             	System.out.println("Open command cancelled by user.");
             }			
 		}
 		
 		//when specified button is pressed.
 		if (src == displayLogBTN){		
+			
+			GuiStateLBL.setText("Displaying Log Data.");
 			
 			//add header to text box and append all necessary informaiton.
 			pizzaText.setText("Orders" + "\n\n");
@@ -387,13 +398,15 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			displayLog();
 		}
 		if(src == displayTotalsBTN){
+			GuiStateLBL.setText("Displaying Store Totals");
 			//Set text to display necessary information.
-			totalDistance = Math.round((totalDistance * 100.0) / 100.0);
+			 totalDistance = Math.round((totalDistance * 100.0) )/ 100.0;
 			profitText.setText("$" + Double.toString(totalProfit));
 			distanceText.setText(Double.toString(totalDistance));
 			displayTotals();
 		}
 		if(src == resetBTN){
+			GuiStateLBL.setText("Program Reset");
 			reset();
 		}
 	}
