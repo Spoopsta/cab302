@@ -33,15 +33,15 @@ public class PizzaTests {
     @Before
     public void Before() throws PizzaException, CustomerException, LogHandlerException{
         meatLovers = new MeatLoversPizza(4, LocalTime.parse("21:00:00"),LocalTime.parse("21:35:00"));
-        margherita = new MargheritaPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
-        vegetarian = new VegetarianPizza(3, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
+        margherita = new MargheritaPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("19:55:20"));
+        vegetarian = new VegetarianPizza(3, LocalTime.parse("19:40:20"), LocalTime.parse("19:55:20"));
     }
     //Ensure that creation is successful.
     @Test
     public void testPizzaCreation() throws PizzaException{
-    	MargheritaPizza testPizza = new MargheritaPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
-    	VegetarianPizza testPizzaV = new VegetarianPizza(3, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
-    	MeatLoversPizza testPizzaM = new MeatLoversPizza(5, LocalTime.parse("19:40:20"), LocalTime.parse("19:45:20"));
+    	MargheritaPizza testPizza = new MargheritaPizza(1, LocalTime.parse("19:40:20"), LocalTime.parse("19:55:20"));
+    	VegetarianPizza testPizzaV = new VegetarianPizza(3, LocalTime.parse("19:40:20"), LocalTime.parse("19:55:20"));
+    	MeatLoversPizza testPizzaM = new MeatLoversPizza(5, LocalTime.parse("19:40:20"), LocalTime.parse("19:55:20"));
     	
     	assertEquals(testPizza.getPizzaType(), "Margherita");
     	assertEquals(testPizzaV.getPizzaType(), "Vegetarian");

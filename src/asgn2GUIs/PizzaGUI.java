@@ -25,10 +25,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * This class is the graphical user interface for the rest of the system. 
- * Currently it is a ‘dummy’ class which extends JFrame and implements Runnable and ActionLister. 
+ * Currently it is a dummy class which extends JFrame and implements Runnable and ActionLister. 
  * It should contain an instance of an asgn2Restaurant.PizzaRestaurant object which you can use to 
  * interact with the rest of the system. You may choose to implement this class as you like, including changing 
- * its class signature – as long as it  maintains its core responsibility of acting as a GUI for the rest of the system. 
+ * its class signature  as long as it  maintains its core responsibility of acting as a GUI for the rest of the system. 
  * You can also use this class and asgn2Wizards.PizzaWizard to test your system as a whole
  * 
  * 
@@ -266,20 +266,20 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		orderLog.clear();
 		customerLog.clear();
 		for(int i = 0; i < restaurant.getNumPizzaOrders(); i++){
-			orderLog.add("type - " + restaurant.getPizzaByIndex(i).getPizzaType() + "\n"
-					+ "Quantity - " + restaurant.getPizzaByIndex(i).getQuantity() + "\n"
-					+ "Order Price - " + restaurant.getPizzaByIndex(i).getOrderPrice() + "\n"
-					+ "Order Cost - " + restaurant.getPizzaByIndex(i).getOrderCost() + "\n"
-					+ "Profit - " + restaurant.getPizzaByIndex(i).getOrderProfit() + "\n" + "\n");
+			orderLog.add("Pizza Type: " + restaurant.getPizzaByIndex(i).getPizzaType() + "\n"
+					+ "Quantity: " + restaurant.getPizzaByIndex(i).getQuantity() + "\n"
+					+ "Order Price: $" + restaurant.getPizzaByIndex(i).getOrderPrice() + "\n"
+					+ "Order Cost: $" + restaurant.getPizzaByIndex(i).getOrderCost() + "\n"
+					+ "Profit: $" + restaurant.getPizzaByIndex(i).getOrderProfit() + "\n" + "\n");
 		}
 		
 		for(int i = 0; i < restaurant.getNumCustomerOrders(); i++){
-			customerLog.add("Customer Name - " + restaurant.getCustomerByIndex(i).getName() + "\n"
-					+ "Mobile Number - " +  restaurant.getCustomerByIndex(i).getMobileNumber() + "\n"
-					+ "Customer Type - " + restaurant.getCustomerByIndex(i).getCustomerType() + "\n"
-					+ "X Location - " + restaurant.getCustomerByIndex(i).getLocationX() + "\n"
-					+ "Y Location - " + restaurant.getCustomerByIndex(i).getLocationY() + "\n"
-					+ "Delivery Distance - " + restaurant.getCustomerByIndex(i).getDeliveryDistance() + "\n" + "\n");
+			customerLog.add("Customer Name: " + restaurant.getCustomerByIndex(i).getName() + "\n"
+					+ "Mobile Number: " +  restaurant.getCustomerByIndex(i).getMobileNumber() + "\n"
+					+ "Delivery Type: " + restaurant.getCustomerByIndex(i).getCustomerType() + "\n"
+					+ "X Location: " + restaurant.getCustomerByIndex(i).getLocationX() + "\n"
+					+ "Y Location: " + restaurant.getCustomerByIndex(i).getLocationY() + "\n"
+					+ "Delivery Distance: " + restaurant.getCustomerByIndex(i).getDeliveryDistance() + "\n" + "\n");
 		}
 	}
 	
@@ -367,7 +367,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			displayLog();
 		}
 		if(src == displayTotalsBTN){
-			profitText.setText(Double.toString(totalProfit));
+			profitText.setText("$" + Double.toString(totalProfit));
 			distanceText.setText(Double.toString(totalDistance));
 			displayTotals();
 		}
