@@ -7,7 +7,7 @@ import asgn2Exceptions.CustomerException;
  *  distance should be zero.  A description of the class's fields and their constraints is provided 
  *  in Section 5.2 of the Assignment Specification.
  *
- * @author Person B
+ * @author Niall Stone
  *
  */
 public class PickUpCustomer extends Customer {
@@ -36,6 +36,7 @@ public class PickUpCustomer extends Customer {
 	 */
 	@Override
 	public double getDeliveryDistance() {
+		//This customer type cannot have a distance.
 		return 0;
 	}
 

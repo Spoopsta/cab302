@@ -7,7 +7,7 @@ import asgn2Exceptions.CustomerException;
  * Distance between the customer and the restaurant.  A description of the class's
  * fields and their constraints is provided in Section 5.2 of the Assignment Specification.
  * 
- * @author PersonB
+ * @author Niall Stone
  *
  */
 public class DroneDeliveryCustomer extends Customer {
@@ -41,6 +41,7 @@ public class DroneDeliveryCustomer extends Customer {
 	 */
 	@Override
 	public double getDeliveryDistance() {
+		//Distance calculated here by Pythagoras' Theorem. 
 		return Math.sqrt((Math.pow((0-super.locationX), 2) + (Math.pow((0-super.locationY), 2))));
 
 	}

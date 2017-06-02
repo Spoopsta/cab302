@@ -8,7 +8,7 @@ import asgn2Exceptions.CustomerException;
  * The classes are instantiated from one of the three valid customer codes outlined in
  * Section 5.3 of the Assignment Specification. Any other code will throw a CustomerException.   
  *     
- * @author Person B
+ * @author Niall Stone
  *
  */
 
@@ -27,6 +27,8 @@ public class CustomerFactory {
 	 * @return A valid PickUpCustomer, DriverDeliveryCustomer or DroneDeliveryCustomer depending on the customerCode.
 	 * @throws CustomerException if the customerCode is not one of the three valid codes listed in Section 5.3 of the Assignment Specification. 
 	 */
+	//Creates a customer based on the provided customerCode. Switch statement determines which customer type has been provided.
+	//Exception is thrown if none of the codes are valid.
 	public static Customer getCustomer(String customerCode, String name, String mobileNumber, int locationX,  int locationY) throws CustomerException{
 		switch(customerCode){
 		case "PUC":

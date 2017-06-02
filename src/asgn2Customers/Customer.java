@@ -8,7 +8,7 @@ import asgn2Exceptions.CustomerException;
  *  the abstract method getDeliveryDistance. A description of the class's
  * fields and their constraints is provided in Section 5.2 of the Assignment Specification.  
  * 
- * @author Person B
+ * @author Niall Stone
 */
 public abstract class Customer {
 
@@ -35,24 +35,32 @@ public abstract class Customer {
 	 * 
 	 */
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
+		//Input verification checking, throws detailed CustomerExceptions in event of failure.
+		//Check for valid type of customer.
 		if(!(type.equals("Pick Up") | type.equals("Driver Delivery") | type.equals("Drone Delivery"))){
 			throw new CustomerException("Invalid Type of Customer.");
 		}
+		//Check for valid name length.
 		if(name.length() > 20){
 			throw new CustomerException("Customer's name is too long");
 		}
+		//Ensure customer's name is a valid string.
 		if(name.equals(new String(new char[name.length()]).replace("\0", " "))){
 			throw new CustomerException("Customer's name cannot be blank spaces.");
 		}
+		//Ensure mobile number has valid length.
 		if(mobileNumber.length() != 10){
 			throw new CustomerException("Mobile numbers must be 10 digits long.");
 		}
+		//Ensure mobile number starts with 0.
 		if(mobileNumber.charAt(0) != '0'){
 			throw new CustomerException("Mobile numbers must start with 0.");
 		}
+		//Ensure valid location data is provided for 'pick up' type customers.
 		if(type=="Pick Up" && !((locationX == 0) && (locationY == 0))){
 			throw new CustomerException("Pick Up Customers must be located in the store (0,0).");
 		}
+		//Assign values to variables.
 		this.name = name;
 		this.type = type;
 		this.mobileNumber = mobileNumber;
@@ -61,6 +69,7 @@ public abstract class Customer {
 		
 	}
 	
+	//Getter functions just return a variable's instance value.
 	/**
 	 * Returns the Customer's name.
 	 * @return The Customer's name.

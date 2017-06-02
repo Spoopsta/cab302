@@ -14,7 +14,7 @@ import asgn2Pizzas.Pizza;
 
 /** A class that tests the methods relating to the creation of Pizza objects in the asgn2Restaurant.LogHander class.
 * 
-* @author Person B
+* @author Niall Stone
 * 
 */
 public class LogHandlerPizzaTests {
