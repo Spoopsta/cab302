@@ -46,7 +46,6 @@ public class LogHandler {
 			
 			re.close();
 		} catch (Exception ex) {
-			// TODO Auto-generated catch block
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}
 		return customers;
@@ -78,7 +77,6 @@ public class LogHandler {
 			
 			in.close();
 		} catch (Exception ex) {
-			// TODO Auto-generated catch block
 			throw new LogHandlerException("There was a problem parsing the line from the log file:" + ex);
 		}	
 		
@@ -124,10 +122,6 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
-		//need to add pizzaException semantic errors.
-		// TO DO
-
-
 		LocalTime orderTime, deliveryTime;
 		int quantity;
 		String pizzaCode;

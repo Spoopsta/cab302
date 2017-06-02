@@ -25,7 +25,7 @@ public class DroneDeliveryCustomer extends Customer {
 	 * @param mobileNumber - The customer mobile number
 	 * @param locationX - The customer x location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param locationY  The customer y location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
-	 * @throws CustomerException if supplied parameters are invalid
+	 * @throws CustomerException if the abstract superclass determines the input is invalid.
 	 * 
 	 */
 	public DroneDeliveryCustomer(String name, String mobileNumber, int locationX, int locationY) throws CustomerException {

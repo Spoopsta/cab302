@@ -25,7 +25,7 @@ public class CustomerFactory {
 	 * @param locationX - The customer x location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param locationY  The customer y location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @return A valid PickUpCustomer, DriverDeliveryCustomer or DroneDeliveryCustomer depending on the customerCode.
-	 * @throws CustomerException if the customerCode is not one of the three valid codes listed in Section 5.3 of the Assignment Specification. 
+	 * @throws CustomerException if the customerCode is not one of the three valid codes - "PUC", "DVC", or "DNC" -  listed in Section 5.3 of the Assignment Specification. 
 	 */
 	//Creates a customer based on the provided customerCode. Switch statement determines which customer type has been provided.
 	//Exception is thrown if none of the codes are valid.

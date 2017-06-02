@@ -88,7 +88,6 @@ public class PizzaRestaurant {
 	 * @throws PizzaException if index is invalid.
 	 */	
 	public Pizza getPizzaByIndex(int index) throws PizzaException{
-		// TO DO
 		if(index > pizzas.size() - 1){
 			throw new PizzaException("Index too large.");
 		}
